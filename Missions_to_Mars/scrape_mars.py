@@ -55,3 +55,47 @@ def scrape():
     hemisphere_list = []
     url_list = []
     hemisphere_url_list = []
+
+    for category in categories:
+        hem = category.find('h3').text.strip()
+        hemisphere_list.append(hem)
+        hem_url = category.find('a')['href']
+        url_list.append(hem_url)
+
+    hemisphere_url_list = ['https://astrogeology.usgs.gov' + url for url in url_list]
+
+    img_urls = []
+    
+    for hem_url in hemisphere_url_list:
+        url = hem_url
+        browser.visit(url)
+        browser.click_link_by_partial_text('Open')
+        html = browser.html
+        soup = BeautifulSoup(html, 'html.parser')
+        category = section.find('div', class_='downloads')
+        hem_image = category.find('ul')
+        hem_image_text = hem_image.find('a')
+        hem_image_url = hem_image_text.attrs['href']
+        img_urls.append(hem_image_url)
+
+    hemisphere_image_urls = []
+
+    for item in range(0,4):
+        hem = {"title": hem_list[item], "img_url": img_urls[item]}
+        hemisphere_image_urls.append(hem)
+
+    mars_data = {
+        "news_title": news_title,
+        "news_p": news_paragraph,
+        "featured_image_url": featured_image_url,
+        "html_table": html_table,
+        "hemisphere_image_urls": hemisphere_image_urls,}   
+
+# Close the browser after scraping
+    browser.quit()
+
+    return mars_data
+
+if __name__ == "__main__":
+    result = scrape()
+    print(result)
