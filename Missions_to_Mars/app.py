@@ -18,7 +18,8 @@ def index():
     return render_template("index.html", mars=mars_data)
 
 @app.route("/scrape")
-
+def scrape():
+    
     mars_data = mongo.db.mars_data
     mars_info = scrape_mars.scrape()
     # Update the Mongo database using update and upsert=True
