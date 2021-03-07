@@ -14,8 +14,8 @@ def scrape():
     
 
     # Mars News site
-    news_url = 'https://mars.nasa.gov/news/'
-    browser.visit(news_url)
+    mars_url = 'https://mars.nasa.gov/news/'
+    browser.visit(mars_url)
     time.sleep(2)
 
     html = browser.html
