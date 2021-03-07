@@ -12,18 +12,18 @@ mongo = PyMongo(app)
 def index():
 
     # find record of data from mongo db
-    mars_data = mongo.db.mars_data.find_one()
+    mars_dict = mongo.db.mars_data.find_one()
     
     # return template and data
-    return render_template("index.html", mars=mars_data)
+    return render_template("index.html", mars=mars_dict)
 
 @app.route("/scrape")
 def scrape():
     
-    mars_data = mongo.db.mars_data
-    mars_info = scrape_mars.scrape()
+    mars_dict = mongo.db.mars_dict
+    mars_data = scrape_mars.scrape()
     # Update the Mongo database using update and upsert=True
-    mars_dict.update({}, mars_info, upsert=True)
+    mars_dict.update({}, mars_data, upsert=True)
     return redirect("/", code=302)
 
 if __name__ == "__main__":
