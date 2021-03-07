@@ -34,13 +34,6 @@ def scrape():
     featured_image_url = base_url + relative_image_path
     # print(featured_image_url)
 
-    # Mars weather to be scraped
-    weather_url = 'https://twitter.com/marswxreport?lang=en'
-    browser.visit(weather_url)
-    weather_html = browser.html
-    weather_soup = BeautifulSoup(weather_html, 'html.parser')
-    # Retrieve latest tweet with Mars weather info
-    mars_weather = weather_soup.find_all('p', class_='TweetTextSize TweetTextSize--normal js-tweet-text tweet-text')[0].text
 
     # Mars Facts site
     facts_url = 'https://space-facts.com/mars/'
@@ -83,7 +76,6 @@ def scrape():
         "news_title": news_title,
         "news_p": news_p,
         "featured_image_url": featured_image_url,
-        "mars_weather": mars_weather,
         "fact_table": str(mars_html_table),
         "hemisphere_images": hemisphere_image_urls
     }
